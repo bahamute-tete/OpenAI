@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- width=device-width 表示宽度是设备屏幕的宽度。initial-scale=1 表示初始的缩放比例。 -->
+        <meta name="viewport" content="width=device-width, initial-scale =1"/>
+        <meta charset="utf_8" />
+
+        <!-- 新 Bootstrap5 核心 CSS 文件 -->
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+
+        <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
+        <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+
+        <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+        <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script>
+            function loadXMLDoc(callback) 
+            {
+                var xmlhttp;
+                var data;
+                if (window.XMLHttpRequest)
+                {
+                    xmlhttp=new XMLHttpRequest();
+                }
+                else
+                {
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.open("GET","../static/data.txt",true);
+                xmlhttp.onreadystatechange=function()
+                {
+                    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                       data=xmlhttp.responseText;
+                       callback(data);
+                    }
+                }
+                xmlhttp.send();
+            }
+
+            function processData(data)
+                {
+                    return data;
+                }
+        </script>
+        <script>
+            $(function()
+                {
+                    $("#btn1").click(function()
+                    {
+                        $("#myDiv").load("../static/data.txt");
+                    })
+                }
+            );
+        </script>
+    </head>
+
+
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <form action="#" method="get">
+                   <input type="text" id="textInput"/>
+                   <input id="submitbtn" type="submit" class="btn,btn-outline-primary"></input>
+                </form>
+                <button id="btn1">111</button>
+                <div class="bg-dark text-white" id="myDiv"></div>
+            </div>
+            <script>
+                var textInput = document.getElementById("textInput");
+                var submit = document.getElementById("submitbtn");
+                var res= document.getElementById("myDiv")
+                submit.onclick =function()
+                {
+                    var s = loadXMLDoc(processData);
+                    var text =textInput.value;
+                    var p = document.createElement("p");
+                    p.setAttribute("id","res")
+                    p.textContent =text +s;
+                    res.append(p);
+                    textInput.value ="";
+                };
+            </script>
+
+        </div>
+    </body>
+
+   
+</html>
