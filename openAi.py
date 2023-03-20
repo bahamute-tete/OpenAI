@@ -122,9 +122,9 @@ def index():
     #     res =request.args.get('content')
     #     return  render_template("index.html", result=res)
    
-    msg =Message('Hello',sender='330378164@qq.com',recipients='330378164@qq.com')
-    msg.body = 'Hello'
-    mail.send(msg)
+    # msg =Message('Hello',sender='330378164@qq.com',recipients=['330378164@qq.com'])
+    # msg.body = 'Hello'
+    # mail.send(msg)
 
     form =NewForm()
     if form.validate_on_submit():
