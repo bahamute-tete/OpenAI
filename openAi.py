@@ -9,17 +9,31 @@ from flask_wtf import FlaskForm
 from wtforms import StringField,SubmitField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail,Message
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] ='12344322'
+
 app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///'+os.path.join(basedir,'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICTIONS']=False
-
 db = SQLAlchemy(app)
 
+app.config['MAIL_SERVER'] = 'stmp.qq.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = '330378164@qq.com'
+app.config['MAIL_PASSWORD'] = 'Shufang112cv'
+'''
+TLS是SSL(Secure Sockets Layer)的更新和更安全的版本,有时也被称为SSL 3.1。
+MAIL_USE_TLS通常使用端口587;
+MAIL_USE_SSL通常使用端口465。
+'''
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+
+mail= Mail(app)
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
@@ -108,6 +122,10 @@ def index():
     #     res =request.args.get('content')
     #     return  render_template("index.html", result=res)
    
+    msg =Message('Hello',sender='330378164@qq.com',recipients='330378164@qq.com')
+    msg.body = 'Hello'
+    mail.send(msg)
+
     form =NewForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.name.data).first()
