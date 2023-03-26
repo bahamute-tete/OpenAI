@@ -103,41 +103,6 @@ class NewForm(FlaskForm):
 #     top_p=1
 # )
 
-# chat = openai.ChatCompletion.create(
-#     model='gpt-3.5-turbo',
-#     messages=[
-#         {"role": "system", "content": "You are a helpful assistant."},
-#         {"role": "user", "content": "Who won the world series in 2020?"},
-#         {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-#         {"role": "user", "content": "Where was it played?"}
-#     ]
-# )
-
-
-# print(response.choices[0].text)
-# print(chat['choices'][0]['message']['content'])
-# print(chat['usage']['total_tokens'])
-
-
-# @app.route("/process_message", methods=["POST"])
-# def process_message():
-#     user_message = request.json.get("message")
-
-#     # Replace with your preferred API call to OpenAI's GPT-3 or Codex
-#     response = openai.Completion.create(
-#         engine="text-davinci-002",
-#         prompt=f"{user_message}\nAI:",
-#         max_tokens=50,
-#         n=1,
-#         stop=None,
-#         temperature=0.5,
-#     )
-
-#     ai_message = response.choices[0].text.strip()
-
-#     return jsonify({"message": ai_message})
-
-
 @app.route('/')
 def index():
     return render_template('chatTest.html')
@@ -186,20 +151,6 @@ def make_shell_context():
 
 # @app.route('/',methods=['GET', 'POST'])
 # def index():
-    # if request.method =='POST':
-    #     content =request.form['content']
-    #     response =openai.Completion.create(
-    #         model ='text-davinci-003',
-    #         prompt =creat_prompt(content),
-    #         max_tokens =2048,
-    #         temperature =1,
-    #         top_p=1
-    #     )
-    #     return render_template('index.html',result=response.choices[0].text)
-    # else:
-    #     res =request.args.get('content')
-    #     return  render_template("index.html", result=res)
-   
     # msg =Message('Hello',sender='330378164@qq.com',recipients=['330378164@qq.com'])
     # msg.body = 'Hello'
     # mail.send(msg)
