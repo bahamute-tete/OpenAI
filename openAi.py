@@ -105,7 +105,7 @@ class NewForm(FlaskForm):
 
 @app.route('/')
 def index():
-    return render_template('chatTest.html')
+    return render_template('index.html')
 
 conversation_history =[]
 
@@ -116,8 +116,6 @@ def process_message():
     user_message = request.json.get("message")
 
     if user_message:
-        
-        
         conversation_history.append({'role':'user','content':user_message})
         
         chat_message =[
@@ -151,10 +149,6 @@ def make_shell_context():
 
 # @app.route('/',methods=['GET', 'POST'])
 # def index():
-    # msg =Message('Hello',sender='330378164@qq.com',recipients=['330378164@qq.com'])
-    # msg.body = 'Hello'
-    # mail.send(msg)
-
     # form =NewForm()
     # if form.validate_on_submit():
     #     user = User.query.filter_by(username=form.name.data).first()

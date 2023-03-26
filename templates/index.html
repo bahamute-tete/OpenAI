@@ -51,16 +51,71 @@
                     <div class="input-group-append">
                         <button class="btn btn-primary" id="sendMessage">Send</button>
                     </div>
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        打开模态框
+                      </button>
                 </div>
 
             </div>
 
            
         </div>
+
+
+        <div class="modal fade" id="myModal" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+           
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Login</h4>
+                  <button type="button" class="close" data-dismiss="modal">X</button>
+                </div>
+           
+                <!-- 模态框内容 -->
+                <div class="modal-body">
+                  <form action="#">
+                    <div class="mb-3">
+                        <label for="username">UserName:</label>
+                        <input type="text" class="form-control" placeholder="username" name="user">
+                    </div>
+                      
+        
+                    <div class="mb-3">
+                        <label for="password" >Password:</label>
+                        <input type="text" class="form-control" placeholder="password" name="pwd">
+                    </div>
+                        
+
+                  </form>
+        
+                </div>
+           
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary" >Sign up</button>
+                </div>
+           
+              </div>
+            </div>
+          </div>
+
+
     </div>
+
+    <!-- 模态框 -->
+
+
+    <script>
+        const myModal =document.getElementById('exampleModal');
+        const myInput =document.getElementById('myInput');
+
+        myModal.addEventListener('shown.bs.modal', () => {myInput.focus();});
+    </script>
     
-    <!-- Add this line just before the closing </body> tag -->
-    <script src="../static/scripts.js"></script>
+
 
 </body>
 </html>
