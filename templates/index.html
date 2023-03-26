@@ -1,28 +1,66 @@
-{% extends 'base.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Page</title>
+    <!-- Add these lines inside the <head> element -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Add this line inside the <head> element -->
+    <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet">
 
-{% block title %}
-    Flask
-{% endblock title %}
 
-{% block page_content %}
-    <div class="page-header">
-        <h1>Hello, {% if name %}
-            {{ name }}
-        {% else %} 
-            Stranger
-        {% endif %}</h1>
+</head>
+<body>
+    <!-- Add this code inside the <body> element -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 bg-light" id="userList">
+                <!-- User list will go here -->
+                <!-- Add this code inside the #userList div -->
+                <h3 class="text-center my-3">Users</h3>
+                <ul class="list-group">
+                    <li class="list-group-item">User 1</li>
+                    <li class="list-group-item">User 2</li>
+                    <li class="list-group-item">User 3</li>
+                </ul>
+            </div>
+            <div class="col-md-8 col-lg-9" id="chatArea">
+                <!-- Chat messages will go here -->
+                 <!-- Add this code inside the #chatArea div -->
+                 <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">User 1</h5>
+                        <p class="card-text">Hello, how are you?</p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">User 2</h5>
+                        <p class="card-text">I'm doing great, thanks! How about you?</p>
+                    </div>
+                </div>
 
-        {% if not known %}
-            <p>Pleased to meet you</p>
-            {% else %}
-            <p>Happy to see you again!</p>
-        {% endif %}
 
-        <p>The Local date and time is {{ moment(current_time).format('LLL')}}</p>
-        <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
+                        <!-- Add this code inside the #chatArea div, after the chat messages -->
+                <div class="input-group mt-3">
+                    <input type="text" class="form-control" id="messageInput" placeholder="Type your message...">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" id="sendMessage">Send</button>
+                    </div>
+                </div>
+
+            </div>
+
+           
+        </div>
     </div>
+    
+    <!-- Add this line just before the closing </body> tag -->
+    <script src="../static/scripts.js"></script>
 
-    {{ wtf.quick_form(form)}}
-{% endblock %}
-
+</body>
+</html>

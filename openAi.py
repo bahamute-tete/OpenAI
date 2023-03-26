@@ -1,7 +1,8 @@
 import openai
 import sys
 import os
-from flask import Flask,url_for,redirect,request,render_template ,session,flash
+import datetime
+from flask import Flask,url_for,redirect,request,render_template ,session,flash,jsonify
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from datetime import datetime
@@ -10,7 +11,11 @@ from wtforms import StringField,SubmitField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail,Message
+from werkzeug.security import generate_password_hash,check_password_hash
+from nltk.tokenize import sent_tokenize
+import nltk
 
+nltk.download('punkt')
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -63,7 +68,19 @@ class User(db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     def __repr__(self) -> str:
         return '<User %r>' %self.username
-      
+
+    password_hash =db.Column(db.String(128))
+    
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+    
+    @password.setter
+    def password(self,password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self,password):
+        return check_password_hash(self.password_hash,password)  
 
 class NewForm(FlaskForm):
     def __init__(self):
@@ -101,13 +118,74 @@ class NewForm(FlaskForm):
 # print(chat['choices'][0]['message']['content'])
 # print(chat['usage']['total_tokens'])
 
+
+# @app.route("/process_message", methods=["POST"])
+# def process_message():
+#     user_message = request.json.get("message")
+
+#     # Replace with your preferred API call to OpenAI's GPT-3 or Codex
+#     response = openai.Completion.create(
+#         engine="text-davinci-002",
+#         prompt=f"{user_message}\nAI:",
+#         max_tokens=50,
+#         n=1,
+#         stop=None,
+#         temperature=0.5,
+#     )
+
+#     ai_message = response.choices[0].text.strip()
+
+#     return jsonify({"message": ai_message})
+
+
+@app.route('/')
+def index():
+    return render_template('chatTest.html')
+
+conversation_history =[]
+
+@app.route('/process_message',methods=["POST"])
+def process_message():
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    user_message = request.json.get("message")
+
+    if user_message:
+        
+        
+        conversation_history.append({'role':'user','content':user_message})
+        
+        chat_message =[
+            {'role':'system','content':'You are a help assistant'},
+        ]+conversation_history
+
+        response = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo',
+        messages=chat_message,
+        max_tokens= 2048,
+        n=1,
+        temperature=0.5)
+                
+        ai_message = response['choices'][0]['message']['content'].strip()
+
+        ai_message_sentences = sent_tokenize(ai_message)
+        formatted_ai_message='\n'.join(ai_message_sentences)
+
+        conversation_history.append({'role':'assistant','content':formatted_ai_message})   
+
+        return jsonify({"message": formatted_ai_message,"time": current_time})
+    
+    return jsonify({"message": "Error! Empty message","time": current_time})
+
+
+
 @app.shell_context_processor
 def make_shell_context():
     return dict(db=db,Role=Role,User=User)
 
 
-@app.route('/',methods=['GET', 'POST'])
-def index():
+# @app.route('/',methods=['GET', 'POST'])
+# def index():
     # if request.method =='POST':
     #     content =request.form['content']
     #     response =openai.Completion.create(
@@ -126,21 +204,21 @@ def index():
     # msg.body = 'Hello'
     # mail.send(msg)
 
-    form =NewForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.name.data).first()
-        if user is None:
-            user = User(username=form.name.data)
-            db.session.add(user)
-            db.session.commit()
-            session['known'] =False
-        else:
-            session['known']=True
-        session['name'] =form.name.data
-        form.name.data =''
-        return redirect(url_for('index'))
-    return render_template('index.html',current_time=datetime.utcnow(),form=form,name=session.get('name'),
-                           known=session.get('known'))
+    # form =NewForm()
+    # if form.validate_on_submit():
+    #     user = User.query.filter_by(username=form.name.data).first()
+    #     if user is None:
+    #         user = User(username=form.name.data)
+    #         db.session.add(user)
+    #         db.session.commit()
+    #         session['known'] =False
+    #     else:
+    #         session['known']=True
+    #     session['name'] =form.name.data
+    #     form.name.data =''
+    #     return redirect(url_for('index'))
+    # return render_template('index.html',current_time=datetime.utcnow(),form=form,name=session.get('name'),
+    #                        known=session.get('known'))
 
 # def creat_prompt(content):
 #     return content

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatTest</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="{{url_for('static',filename='/css/styles.css')}}" rel="stylesheet">
+</head>
+<body>
+    
+    <div class="container-fluid ml-3 mr-3 bg-dark">
+        <div class="row">
+            <div class="col-md-2" id="userList" style="background-color: rgb(39, 39, 39);">
+               <h5 class="text-center my-3 text-light">Topic</h5>
+               <ul class="list-group">
+                    <li class="list-group-item">Topic1</li>
+                    <li class="list-group-item">Topic2</li>
+                    <li class="list-group-item">Topic3</li>
+               </ul>
+            </div>
+
+            <div class="col-md-10 " id="chatArea">
+                <!-- <div class="card mb-3 shadow-sm " style="background-color: rgb(244, 255, 25);border-radius: 10px;">
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-2">
+                                <img class="rounded-circle" src="../static/img/情头0.png" alt="head_icon" style="width: 64x; height: 64px;">
+                            </div>
+                            
+                            <div class="col-10">
+                                <h5 class="card-title">1111</h5>
+                                <p  >3333</p> 
+                            </div>  
+                        </div>
+                        <hr class="my-auto">
+                        <p class="card-text">222222222</p>
+                    </div>
+                </div>
+
+                <div class="card mb-3 ">
+                    <div class="card-body bg-info">
+                        <h5 class="card-title text-right ">1111</h5>
+                        <p class="card-text">222222222</p>
+                    </div>
+                </div> -->
+
+
+                <div class="input-group mt-3">
+                    <input type="text" class="form-control" id="messageInput" placeholder="Text what you want">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" id="sendMessage">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../static/java/ajax.js"></script>
+
+</body>
+</html>
