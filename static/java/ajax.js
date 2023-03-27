@@ -18,6 +18,7 @@ document.getElementById("sendMessage").addEventListener
        {
          addMessageToChat('username',messageText,data.time,true);
          addMessageToChat('GPT',data.message,data.time,false);
+         messageText='';
        }
     }).catch(err=>console.error(err));
     
@@ -30,7 +31,7 @@ function addMessageToChat(sender,text,time,self)
 {
     var chatArea = document.getElementById("chatArea");
     var newMessage = document.createElement("div");
-    newMessage.classList.add("card","mb-3","shadow-sm");
+    newMessage.classList.add("card","mb-3","shadow-sm","mr-3");
     newMessage.style.borderRadius="12px";
     newMessage.style.backgroundColor =self? "rgba(244,255,255)":"rgba(255,255,255)";
 
@@ -41,7 +42,7 @@ function addMessageToChat(sender,text,time,self)
     nesRow.classList.add("row");
 
     var newHeadIconDiv = document.createElement("div");
-    newHeadIconDiv.classList.add("col-2");
+    newHeadIconDiv.classList.add("col-1");
     var icon = document.createElement("img");
     icon.classList.add("rounded-circle");
     icon.style.width =icon.style.height ="64px";
@@ -50,7 +51,7 @@ function addMessageToChat(sender,text,time,self)
 
 
     var newInfoDiv = document.createElement("div");
-    newInfoDiv.classList.add("col-10");
+    newInfoDiv.classList.add("col-11");
 
    
 
@@ -80,6 +81,7 @@ function addMessageToChat(sender,text,time,self)
     newMessageBody.appendChild(newMessageText);
 
     newMessage.appendChild(newMessageBody);
+
     chatArea.insertBefore(newMessage, chatArea.querySelector(".input-group"));
 
 }

@@ -105,7 +105,7 @@ class NewForm(FlaskForm):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('chatTest.html')
 
 conversation_history =[]
 

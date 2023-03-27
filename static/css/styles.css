@@ -27,3 +27,9 @@ body {
 .card-text {
     white-space: pre-wrap;
 }
+
+#sendMessage
+{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
